@@ -6,8 +6,11 @@
  */
 package mx.tec.web.lab.vo;
 
+import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 
+import mx.tec.web.lab.validation.ValidColor;
 import mx.tec.web.lab.validation.ValidSize;
 
 /**
@@ -18,15 +21,28 @@ import mx.tec.web.lab.validation.ValidSize;
 public class SkuVO {
 	private long id;
 	@NotBlank(message = "Color is mandatory")
+	@ValidColor
 	private String color;
 	@ValidSize
 	@NotBlank(message = "Size is mandatory")
 	private String size;
+
+	@Digits(integer = 4, fraction = 2)
 	private double listPrice;
+
+	@Digits(integer = 4, fraction = 2)
 	private double salePrice;
+
+	@Digits(integer = 6, fraction = 0)
 	private long quantityOnHand;
+	@NotBlank(message = "Small Image Url mandatory")
+	@Pattern(regexp = "^(https?|ftp|file)://[-a-zA-Z0-9+&@#/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#/%=~_|]", message = "not a valid url")
 	private String smallImageUrl;
+	@NotBlank(message = "Medium Image Url mandatory")
+	@Pattern(regexp = "^(https?|ftp|file)://[-a-zA-Z0-9+&@#/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#/%=~_|]", message = "not a valid url")
 	private String mediumImageUrl;
+	@NotBlank(message = "Large Image Url mandatory")
+	@Pattern(regexp = "^(https?|ftp|file)://[-a-zA-Z0-9+&@#/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#/%=~_|]", message = "not a valid url")
 	private String largeImageUrl;
 
 	/**
@@ -186,4 +202,13 @@ public class SkuVO {
 	public void setLargeImageUrl(String largeImageUrl) {
 		this.largeImageUrl = largeImageUrl;
 	}
+
+	@Override
+	public String toString() {
+		return "SkuVO [id=" + id + ", color=" + color + ", size=" + size + ", listPrice=" + listPrice + ", salePrice="
+				+ salePrice + ", quantityOnHand=" + quantityOnHand + ", smallImageUrl=" + smallImageUrl
+				+ ", mediumImageUrl=" + mediumImageUrl + ", largeImageUrl=" + largeImageUrl + "]";
+	}
+	
+	
 }
